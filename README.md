@@ -1,4 +1,4 @@
-### This project is was maintained by [mattleibow](https://github.com/mattleibow) and available at [https://github.com/mattleibow/XNA-4.0-Content-Compiler](https://github.com/mattleibow/XNA-4.0-Content-Compiler).
+### This project was maintained by [mattleibow](https://github.com/mattleibow) and available at [https://github.com/mattleibow/XNA-4.0-Content-Compiler](https://github.com/mattleibow/XNA-4.0-Content-Compiler).
 
 --------
 
