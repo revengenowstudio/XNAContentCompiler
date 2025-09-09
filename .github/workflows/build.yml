@@ -43,7 +43,7 @@ jobs:
       # zip files in XNA-CC-CLI\bin\Release
       - name: Zip files
         run: |
-          Compress-Archive -Path XNA-CC-CLI\bin\Release\* -DestinationPath XNAContentCompiler.zip
+          Compress-Archive -Path XNA-CC-CLI\bin\Release\* -DestinationPath XNAContentCompiler-${{ steps.version.outputs.value }}.zip
       # create release and contain zip file
       - name: Create Release
         uses: ncipollo/release-action@v1
@@ -51,7 +51,7 @@ jobs:
           tag: ${{ steps.version.outputs.value }}
           name: Release ${{ steps.version.outputs.value }}
           body: "Automated release from GitHub Actions"
-          files: XNAContentCompiler.zip
+          files: XNAContentCompiler-${{ steps.version.outputs.value }}.zip
           draft: false
           prerelease: false
           overwrite: true
