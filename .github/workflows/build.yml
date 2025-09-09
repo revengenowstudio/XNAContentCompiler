@@ -1,0 +1,31 @@
+name: Build product
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    {}
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      # build C# project from XNAContentCompiler.sln
+      - name: Build XNAContentCompiler
+        run: msbuild XNAContentCompiler.sln /p:Configuration=Release
+      # zip files in XNA-CC-CLI\bin\Release
+      - name: Zip files
+        run: |
+          Compress-Archive -Path XNA-CC-CLI\bin\Release\* -DestinationPath XNAContentCompiler.zip
+      # create release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release v1.0.${{ github.run_number }}
+          draft: false
+          prerelease: false
