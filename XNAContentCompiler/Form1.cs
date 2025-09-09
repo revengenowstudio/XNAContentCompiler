@@ -87,6 +87,12 @@ namespace XNAContentCompiler
 
         private void btCompile_Click(object sender, EventArgs e)
         {
+            var outputPath = txtOutput.Text.Trim();
+            if (!Directory.Exists(outputPath))
+            {
+                MessageBox.Show("output must be a directory!");
+                return;
+            }
             if (SelectedFiles.Count > 0 && txtOutput.Text.Trim().Length > 0)
             {
                 backgroundWorker.RunWorkerAsync();
