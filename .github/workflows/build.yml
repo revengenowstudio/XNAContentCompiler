@@ -5,10 +5,22 @@ on:
       - master
   workflow_dispatch: {}
 
+env:
+  VERSION_MAJOR: 1
+  VERSION_MINOR: 0
+  VERSION_REV_OFFSET: 10
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
+      - name: Make version
+        id: version
+        shell: bash
+        run: |
+          VERSION_REVISION=$(( ${{ github.run_number }} - $VERSION_REV_OFFSET ))
+          echo "value=v${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}.${VERSION_REVISION}" >> $GITHUB_OUTPUT
+          echo "Version: ${VERSION_STRING}"
       - uses: actions/checkout@v5
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -32,14 +44,16 @@ jobs:
       - name: Zip files
         run: |
           Compress-Archive -Path XNA-CC-CLI\bin\Release\* -DestinationPath XNAContentCompiler.zip
-      # create release
+      # create release and contain zip file
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          release_name: Release v1.0.${{ github.run_number }}
+          tag: ${{ steps.version.outputs.value }}
+          name: Release ${{ steps.version.outputs.value }}
+          body: "Automated release from GitHub Actions"
+          files: XNAContentCompiler.zip
           draft: false
           prerelease: false
+          overwrite: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
