@@ -16,7 +16,7 @@ jobs:
       # build C# project from XNAContentCompiler.sln
       - name: Build XNAContentCompiler
         run: |
-          msbuild XNAContentCompiler.sln /p:Configuration=Release
+          msbuild XNAContentCompiler.sln /p:Configuration=Release /p:Platform=x86 /m
       # zip files in XNA-CC-CLI\bin\Release
       - name: Zip files
         run: |
