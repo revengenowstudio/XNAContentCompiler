@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
-    {}
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -13,6 +12,15 @@ jobs:
       - uses: actions/checkout@v5
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
+      # install net framework 4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 4.0.x
+      # install msi from sdk/SharedFilesInstaller_File.msi
+      # - name: Install SharedFilesInstaller
+      #   run: |
+      #     Start-Process msiexec.exe -ArgumentList '/i sdk/SharedFilesInstaller_File.msi /quiet /norestart' -Wait
       # build C# project from XNAContentCompiler.sln
       - name: Build XNAContentCompiler
         run: |
