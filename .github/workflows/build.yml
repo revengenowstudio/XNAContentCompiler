@@ -11,9 +11,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
       # build C# project from XNAContentCompiler.sln
       - name: Build XNAContentCompiler
-        run: msbuild XNAContentCompiler.sln /p:Configuration=Release
+        run: |
+          msbuild XNAContentCompiler.sln /p:Configuration=Release
       # zip files in XNA-CC-CLI\bin\Release
       - name: Zip files
         run: |
