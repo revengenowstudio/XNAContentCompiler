@@ -19,7 +19,8 @@ jobs:
         shell: bash
         run: |
           VERSION_REVISION=$(( ${{ github.run_number }} - $VERSION_REV_OFFSET ))
-          echo "value=v${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}.${VERSION_REVISION}" >> $GITHUB_OUTPUT
+          VERSION_STRING="v${{ env.VERSION_MAJOR }}.${{ env.VERSION_MINOR }}.$VERSION_REVISION"
+          echo "value=${VERSION_STRING}" >> $GITHUB_OUTPUT
           echo "Version: ${VERSION_STRING}"
       - uses: actions/checkout@v5
       - name: Add msbuild to PATH
