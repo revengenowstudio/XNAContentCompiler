@@ -33,10 +33,6 @@ jobs:
           $output = "NDP452-KB2901907-x86-x64-AllOS-ENU.exe"
           Invoke-WebRequest -Uri $downloadUrl -OutFile $output
           Start-Process -FilePath $output -ArgumentList "/quiet", "/norestart" -Wait
-      # install msi from sdk/SharedFilesInstaller_File.msi
-      # - name: Install SharedFilesInstaller
-      #   run: |
-      #     Start-Process msiexec.exe -ArgumentList '/i sdk/SharedFilesInstaller_File.msi /quiet /norestart' -Wait
       # build C# project from XNAContentCompiler.sln
       - name: Build XNAContentCompiler
         run: |
